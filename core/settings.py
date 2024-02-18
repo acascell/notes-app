@@ -87,7 +87,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "notesdb",
         "USER": "sg_account",
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
         "HOST": "db",  # Set to empty string for localhost.
         "PORT": "5432",  # Default PostgreSQL port
     }

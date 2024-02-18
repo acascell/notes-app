@@ -12,6 +12,7 @@ services:
     volumes:
       - .:/app
     environment:
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
       - DATABASE_URL=postgres://sg_account:${POSTGRES_PASSWORD}@localhost:5432/notesdb
     depends_on:
       - db
