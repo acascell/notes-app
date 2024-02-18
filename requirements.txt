@@ -1,6 +1,7 @@
 Django
 djangorestframework
 django-extensions
+psycopg2-binary
 black==22.3.0
 ruff==0.0.79
 mypy==0.910
