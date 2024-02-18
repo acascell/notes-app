@@ -3,8 +3,24 @@ version: '3.8'
 services:
   web:
     build: .
+    ports:
+      - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
-    ports:
-      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://sg_account:${POSTGRES_PASSWORD}@localhost:5432/notesdb
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=notesdb
+      - POSTGRES_USER=sg_account
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+volumes:
+  postgres_data:
