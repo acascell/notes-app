@@ -12,7 +12,9 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
-COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+#COPY entrypoint.sh /app/
+#RUN chmod 755 /app/entrypoint.sh
+
+#ENTRYPOINT ["sh", "-c", "/app/entrypoint.sh"]
+#RUN cwd ["python", "manage.py", "runserver"]

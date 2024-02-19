@@ -5,10 +5,14 @@ services:
     build: .
     ports:
       - "8000:8000"
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py makemigrations && 
+             python manage.py migrate &&
+             exec python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     environment:
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
       - DATABASE_URL=postgres://sg_account:${POSTGRES_PASSWORD}@localhost:5432/notesdb
     depends_on:
       - db
