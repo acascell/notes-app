@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Welcome to Sticky Notes!{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h1>Welcome to Sticky Notes!</h1>
+            <img src="{% static 'sticky-notes.png' %}" alt="Sticky Notes" class="img-fluid my-3">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <a href="{% url 'login' %}" class="btn btn-primary me-2">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
