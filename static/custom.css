@@ -1,0 +1,32 @@
+/* static/custom.css */
+#loginForm {
+    max-width: 500px; /* Adjust as needed */
+    margin: auto; /* This centers the form if it's smaller than its container */
+}
+
+#RegisterForm {
+    max-width: 500px; /* Adjust as needed */
+    margin: auto; /* This centers the form if it's smaller than its container */
+}
+
+
+/*body {*/
+/*    background-color: #ff70c4; !* Light gray background *!*/
+/*    color: #343a40; !* Dark text color *!*/
+/*}*/
+
+/*header {*/
+/*    background-color: #007bff; !* Primary color for header *!*/
+/*    !*color: #fff; !* Text color for header *!*!*/
+/*    padding: 10px 0;*/
+/*}*/
+
+/*main {*/
+/*    padding: 20px 0;*/
+/*}*/
+
+/*footer {*/
+/*    background-color: #f8f9fa; !* Light gray background for footer *!*/
+/*    color: #343a40; !* Dark text color for footer *!*/
+/*    padding: 20px 0;*/
+/*}*/
