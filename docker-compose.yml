@@ -13,6 +13,7 @@ services:
       - .:/app
     environment:
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - SECRET_KEY=$SECRET_KEY
       - DATABASE_URL=postgres://sg_account:${POSTGRES_PASSWORD}@localhost:5432/notesdb
     depends_on:
       - db
