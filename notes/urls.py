@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import NoteList, NoteDetail, login_page, register_page, UserCreate, notes_page, list_notes, logout_page
+from .views import NoteList, NoteDetail, login_page, register_page, UserCreate, notes_page, list_notes, logout_page, index
 
 urlpatterns = [
     # Frontend URL for the login page
+    path('index/', index, name='index'),
     path('login/', login_page, name='login'),
     path('logout/', logout_page, name='logout'),
     path('register/', register_page, name='register'),
