@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-
+from django.shortcuts import render, redirect
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from notes.serializers import UserSerializer
 from .models import Note
 from .serializers import NoteSerializer
@@ -16,12 +15,21 @@ def login_page(request):
     return render(request, 'login.html')
 
 
+def logout_page(request):
+    return render(request, 'index.html')
+
+
 def register_page(request):
     return render(request, 'register.html')
 
 
 def notes_page(request):
-    return render(request, 'notes.html')
+    return render(request, 'create_notes.html')
+
+
+# @jwt_required
+def list_notes(request):
+    return render(request, 'list_notes.html')
 
 
 # Create your views here.
@@ -33,7 +41,7 @@ class UserCreate(generics.CreateAPIView):
 
 # CRUD operations for notes
 class NoteList(generics.ListCreateAPIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
@@ -46,6 +54,7 @@ class NoteList(generics.ListCreateAPIView):
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
