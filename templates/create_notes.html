@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Welcome to Sticky Notes!{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-3">Create Note</h2>
+            <form id="createNoteForm">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Note</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('createNoteForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+        // Redirect to login page if no token is found
+        window.location.href = '/api/login/';
+        return;
+    }
+    const data = {
+        title: document.getElementById('title').value,
+        content: document.getElementById('content').value,
+    };
+    fetch('/api/notes/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Use backticks and ${} for the variable
+            'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is included
+        },
+
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to save note');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Note saved successfully:', data);
+        // Redirect to notes list page after successful note creation
+        window.location.href = '/api/list-notes/';
+    })
+    .catch(error => {
+        console.error('Error saving note:', error);
+        // Optionally, display an error message to the user
+    });
+});
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}
