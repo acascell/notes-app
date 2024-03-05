@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'custom.css' %}">
+{% extends 'base.html' %}
 
-</head>
-<body>
+{% load static %}
+
+{% block title %}Register{% endblock %}
+{% block content %}
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6 text-center">
@@ -33,40 +28,42 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block scripts %}
 <script>
-document.getElementById('registerForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const data = {
-        username: document.getElementById('username').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-    };
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+        };
 
-    fetch('/api/user-registration/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            // If CSRF tokens are required:
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Registration failed');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-        window.location.href = '/api/login/';  // Redirect to the login page on successful registration
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        // Optionally, display error to the user
+        fetch('/api/user-registration/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // If CSRF tokens are required:
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = '/api/login/';  // Redirect to the login page on successful registration
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            // Optionally, display error to the user
+        });
     });
-});
-</script>
-</body>
-</html>
+    </script>
+{% endblock %}
+
