@@ -11,12 +11,32 @@
             <h1>Welcome to Sticky Notes!</h1>
             <img src="{% static 'sticky-notes.png' %}" alt="Sticky Notes" class="img-fluid my-3">
             <div class="row justify-content-center">
-                <div class="col-auto">
-                    <a href="{% url 'login' %}" class="btn btn-primary me-2">Login</a>
-                    <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+                <div class="col-auto" id="authButtons">
+                    <!-- Buttons will be dynamically shown or hidden based on authentication status -->
+                    <a href="{% url 'list-notes' %}" class="btn btn-primary me-2 auth-required" style="display:none;">List Notes</a>
+                    <a href="{% url 'create-note' %}" class="btn btn-success auth-required" style="display:none;">Create Note</a>
+                    <a href="{% url 'login' %}" class="btn btn-primary me-2 auth-not-required">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-secondary auth-not-required">Register</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const accessToken = localStorage.getItem('access_token');
+        if (accessToken) {
+            // User is considered logged in; show auth-required buttons, hide auth-not-required buttons
+            document.querySelectorAll('.auth-required').forEach(el => el.style.display = '');
+            document.querySelectorAll('.auth-not-required').forEach(el => el.style.display = 'none');
+        } else {
+            // User is logged out; show auth-not-required buttons, hide auth-required buttons
+            document.querySelectorAll('.auth-required').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.auth-not-required').forEach(el => el.style.display = '');
+        }
+    });
+</script>
 {% endblock %}
