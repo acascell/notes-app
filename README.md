@@ -1,15 +1,7 @@
 # notes-app
 Notebook app performing CRUD operations using Django web framework
 
-<p align="center" markdown=1>
-<a href="https://github.com/igorbenav/fastcrud/actions/workflows/tests.yml">
-  <img src="https://github.com/igorbenav/fastcrud/actions/workflows/tests.yml/badge.svg" alt="Tests"/>
-</a>
-<a href="https://pypi.org/project/fastcrud/">
-  <img src="https://img.shields.io/pypi/pyversions/fastcrud.svg?color=%2334D058" alt="Supported Python Versions"/>
-</a>
-</p>
-<hr>
+![badge.png](badge.png)
 
 ![logo.png](logo.png)
 
