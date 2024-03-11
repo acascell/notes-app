@@ -11,10 +11,12 @@ manage their notes seamlessly. Whether you're jotting down a quick reminder or c
 offers a clutter-free environment to capture your thoughts.
 
 ### ✨ Features
-User Registration and Authentication: Secure sign-up and login process, ensuring that your notes are private and protected.
-Create and Manage Notes: Effortlessly add new notes with titles and descriptions. Edit or delete existing ones as per your needs.
-Persistent Storage: All notes are securely stored in the database, tied to individual user accounts, ensuring that your data is available whenever you return.
-Responsive Design: A clean and responsive interface that adapts to different screen sizes, providing a consistent experience across devices.
+ - User Registration and Authentication: Secure sign-up and login process, ensuring that your notes are private and protected.
+ - Create and Manage Notes: Effortlessly add new notes with titles and descriptions. 
+ - Edit or delete existing ones as per your needs.
+ - Persistent Storage: All notes are securely stored in the database, tied to individual user accounts, 
+ensuring that your data is available whenever you return.
+ - Responsive Design: A clean and responsive interface using bootstrap.
 
 ### 🚀 Technology Stack
 - python 3.9
