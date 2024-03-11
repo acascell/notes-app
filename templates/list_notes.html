@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}List of Notes{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">My Notes</h1>
+    <div id="notesList" class="list-group">
+        <!-- Notes will be dynamically added here -->
+    </div>
+    <p id="noNotesMessage" class="text-muted" style="display: none;">No notes found.</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+        window.location.href = '/login/';
+        return;
+    }
+
+    fetch('/api/notes/', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(notes => {
+        const notesList = document.getElementById('notesList');
+        if (notes.length === 0) {
+            document.getElementById('noNotesMessage').style.display = 'block';
+        } else {
+            notes.forEach(note => {
+                const noteItem = document.createElement('div');
+                noteItem.className = 'list-group-item list-group-item-action flex-column align-items-start';
+                noteItem.innerHTML = `
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" contenteditable="false" id="title-${note.id}">${note.title}</h5>
+                        <small>Last Updated: ${new Date(note.updated_at).toLocaleString()}</small>
+                    </div>
+                    <p class="mb-1" contenteditable="false" id="content-${note.id}">${note.content}</p>
+                    <small>Created: ${new Date(note.created_at).toLocaleString()}</small>
+                    <button class="btn btn-primary btn-sm edit-btn" id="edit-${note.id}" onclick="toggleEditSave(${note.id}, true)">Edit</button>
+                    <button class="btn btn-success btn-sm save-btn" id="save-${note.id}" style="display: none;" onclick="toggleEditSave(${note.id}, false)">Save</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteNote(${note.id})">Delete</button>
+                `;
+                notesList.appendChild(noteItem);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+function toggleEditSave(noteId, isEditing) {
+    let title = document.getElementById(`title-${noteId}`);
+    let content = document.getElementById(`content-${noteId}`);
+    let editBtn = document.getElementById(`edit-${noteId}`);
+    let saveBtn = document.getElementById(`save-${noteId}`);
+
+    if (isEditing) {
+        // Switch to edit mode
+        title.contentEditable = content.contentEditable = true;
+        title.focus();
+        editBtn.style.display = 'none';
+        saveBtn.style.display = 'inline-block';
+    } else {
+        // Save changes
+        title.contentEditable = content.contentEditable = false;
+        editBtn.style.display = 'inline-block';
+        saveBtn.style.display = 'none';
+
+        const token = localStorage.getItem('access_token');
+        fetch(`/api/notes/${noteId}/`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title: title.innerText, content: content.innerText })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update note');
+            }
+            console.log('Note updated successfully');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}
+
+function deleteNote(noteId) {
+    const token = localStorage.getItem('access_token');
+    fetch(`/api/notes/${noteId}/`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to delete note');
+        }
+        document.location.reload(true); // Reload the page to update the list
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
+{% endblock %}
