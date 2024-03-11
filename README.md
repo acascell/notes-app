@@ -45,4 +45,9 @@ safely managed.
 Gunicorn serves as the WSGI HTTP server, interfacing with Django, while NGINX is used as a reverse proxy, handling client requests efficiently.
 5. **Database**: Notes and user data are stored in a robust database, ensuring data persistence and security.
 
+### 🚀 
 
+![containers.png](docs%2Fcontainers.png)
+
+
+![notes-list.png](docs%2Fnotes-list.png)
