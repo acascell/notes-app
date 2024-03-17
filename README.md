@@ -45,17 +45,3 @@ safely managed.
 4. **Deployment**: The application is containerized using Docker, making deployment seamless and scalable.
 Gunicorn serves as the WSGI HTTP server, interfacing with Django, while NGINX is used as a reverse proxy, handling client requests efficiently.
 5. **Database**: Notes and user data are stored in a robust database, ensuring data persistence and security.
-
-### Screenshots🚀 
-
-![containers.png](docs%2Fcontainers.png)
-
-![home.png](docs%2Fhome.png)
-
-![login.png](docs%2Flogin.png)
-
-![register.png](docs%2Fregister.png)
-
-![jwt.png](docs%2Fjwt.png)
-
-![notes-list.png](docs%2Fnotes-list.png)
